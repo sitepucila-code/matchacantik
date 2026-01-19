@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Matcha Premium</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f7f3;
+            color: #333;
+        }
+        header {
+            background-color: #6aa84f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .lang-select {
+            margin-top: 10px;
+        }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+        img {
+            width: 100%;
+            max-width: 500px; /* gambar diperbesar */
+            display: block;
+            margin: 0 auto 25px;
+            border-radius: 12px;
+        }
+        h2 {
+            color: #6aa84f;
+        }
+        ul {
+            line-height: 1.8;
+        }
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #38761d;
+            margin: 15px 0;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0 20px;
+            border-radius: 5px;
+        }
+        .cart-btn {
+            background-color: #6aa84f;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .cart-btn:hover {
+            background-color: #38761d;
+        }
+        .cart-box {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .cart-item img {
+            width: 90px;
+            border-radius: 20px;
+        }
+        button {
+            padding: 3px 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .contact {
+            background-color: #eaf1e6;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #6aa84f;
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 id="title">Matcha Premium Jepang</h1>
+    <p id="subtitle">Sehat • Alami • Berkualitas Tinggi</p>
+
+    <!-- Opsi Bahasa -->
+    <div class="lang-select">
+        <select onchange="changeLang(this.value)">
+            <option value="id">Bahasa Indonesia</option>
+            <option value="en">English</option>
+        </select>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Gambar Produk -->
+    <img src="https://icms.aixdb.cn/icms/upload/1dd0cf104ad411ee844df3a65f35c2cc/FTPData/UEditor/image/20231128/1701137207815/1061212176205349029.jpg" alt="Matcha">
+
+    <!-- Deskripsi -->
+    <h2 id="descTitle">Deskripsi Produk</h2>
+    <p id="descText">
+        Matcha Premium dibuat dari daun teh hijau pilihan Jepang,
+        tanpa bahan pengawet dan cocok untuk minuman maupun dessert.
+    </p>
+
+    <!-- Keunggulan -->
+    <h2 id="advTitle">Keunggulan</h2>
+    <ul id="advList">
+        <li>100% alami</li>
+        <li>Kaya antioksidan</li>
+        <li>Rasa lembut & aroma khas</li>
+        <li>Aman untuk konsumsi harian</li>
+    </ul>
+
+    <!-- Pilihan -->
+    <h2 id="variantTitle">Pilih Ukuran</h2>
+    <select id="variant">
+        <option value="Matcha 50 gram - Rp 40.000">50 gram - Rp 40.000</option>
+        <option value="Matcha 100 gram - Rp 75.000">100 gram - Rp 75.000</option>
+        <option value="Matcha 250 gram - Rp 170.000">250 gram - Rp 170.000</option>
+    </select>
+
+    <div class="price" id="priceText">Mulai dari Rp 40.000</div>
+
+    <!-- Tombol Keranjang -->
+    <div class="cart-btn" onclick="addToCart()" id="cartBtn">
+        🛒 Tambah ke Keranjang
+    </div>
+
+    <!-- Keranjang -->
+    <div class="cart-box" id="cart">
+        <h2 id="cartTitle">Keranjang Belanja</h2>
+        <div id="cartItems"></div>
+    </div>
+
+    <!-- Contact -->
+    <div class="contact">
+        <h2>Contact Person</h2>
+        <p>
+            📞 WhatsApp: 0895-4062-29413 <br>
+            📞 WhatsApp: 0813-3447-7801 <br>
+            📧 Email: matchaprem.japan@gmail.com <br>
+            📍 Instagram: @matcha.premium
+        </p>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; Warning. Please read carefully. This page was created for a school assignment and everything on this page is not original. Thank you.</p>
+</footer>
+
+<script>
+    let cartItems = [];
+
+    function getPrice(variant) {
+        if (variant.includes("50")) return 40000;
+        if (variant.includes("100")) return 75000;
+        return 170000;
+    }
+
+    function addToCart() {
+        const variant = document.getElementById("variant").value;
+        const price = getPrice(variant);
+
+        cartItems.push({
+            name: "Matcha Premium",
+            variant: variant,
+            price: price,
+            qty: 1,
+            image: "https://cnc-magazine.oramiland.com/parenting/images/Matcha.width-800.format-webp.webp"
+        });
+
+        renderCart();
+        document.getElementById("cart").style.display = "block";
+    }
+
+    function renderCart() {
+        const cart = document.getElementById("cartItems");
+        cart.innerHTML = "";
+
+        cartItems.forEach((item, index) => {
+            cart.innerHTML += `
+                <div class="cart-item">
+                    <img src="${item.image}">
+                    <div>
+                        <p><strong>${item.name}</strong></p>
+                        <p>${item.variant}</p>
+                        <p>
+                            Qty:
+                            <button onclick="changeQty(${index}, -1)">−</button>
+                            ${item.qty}
+                            <button onclick="changeQty(${index}, 1)">+</button>
+                        </p>
+                        <p><strong>Total:</strong>
+                            Rp ${(item.qty * item.price).toLocaleString("id-ID")}
+                        </p>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    function changeQty(index, change) {
+        if (cartItems[index].qty + change < 1) return;
+        cartItems[index].qty += change;
+        renderCart();
+    }
+
+    // Opsi Bahasa
+    function changeLang(lang) {
+        if (lang === "en") {
+            title.innerText = "Japanese Premium Matcha";
+            subtitle.innerText = "Healthy • Natural • High Quality";
+            descTitle.innerText = "Product Description";
+            descText.innerText =
+                "Premium Matcha made from selected Japanese green tea leaves, free from preservatives and perfect for drinks and desserts.";
+            advTitle.innerText = "Advantages";
+            advList.innerHTML = `
+                <li>100% natural</li>
+                <li>Rich in antioxidants</li>
+                <li>Smooth taste & aroma</li>
+                <li>Safe for daily consumption</li>
+            `;
+            variantTitle.innerText = "Choose Size";
+            priceText.innerText = "Starting from Rp 40.000";
+            cartBtn.innerText = "🛒 Add to Cart";
+            cartTitle.innerText = "Shopping Cart";
+        } else {
+            location.reload(); // balik ke Bahasa Indonesia
+        }
+    }
+</script>
+
+</body>
+</html>
